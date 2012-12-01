@@ -3,10 +3,12 @@ Contributors: www.gopiplus.com, gopiplus
 Donate link: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Author URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
-Tags: Photo, Text, Slider
+Tags: wordpress, plugin, photo, slider
 Requires at least: 3.0
-Tested up to: 3.4
-Stable tag: 5.0
+Tested up to: 3.5
+Stable tag: 5.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
 Wp photo text slider 50 this is an another JQuery based slideshow plugin for wordpress. We can create the beautiful slideshow with this plugin.
 
@@ -109,21 +111,27 @@ First version.
 
 2.0
 
-Tested UpTo 3.2.1
+Tested up to WordPress 3.2.1
 Javascript added using enqueue script.
 
 3.0
 
-Tested UpTo 3.3
+Tested up to WordPress 3.3
 
 4.0
 
 Fixed plug-in directory violations issue
-Tested UpTo 3.4
+Tested up to WordPress 3.4
 
 5.0
 
-New demo link, www.gopiplus.com
+New demo link, http://www.gopiplus.com
+
+5.1
+
+Tested up to WordPress 3.5
+Avoid registering the alternate jQuery.
+From this version we are using existing wordpress jQuery.
 
 == Changelog ==
 
@@ -133,18 +141,24 @@ First version.
 
 2.0
 
-Tested UpTo 3.2.1
+Tested up to WordPress 3.2.1
 Javascript added using enqueue script.
 
 3.0
 
-Tested UpTo 3.3
+Tested up to WordPress 3.3
 
 4.0
 
 Fixed plug-in directory violations issue
-Tested UpTo 3.4
+Tested up to WordPress 3.4
 
 5.0
 
-New demo link, www.gopiplus.com
+New demo link, http://www.gopiplus.com
+
+5.1
+
+Tested up to WordPress 3.5
+Avoid registering the alternate jQuery.
+From this version we are using existing wordpress jQuery.

@@ -5,10 +5,12 @@ Plugin Name: Wp photo text slider 50
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Description:  Wordpress plugin Wp photo text slider 50 create a photo (photo + heading + description) slider on the wordpress website.
 Author: Gopi.R
-Version: 5.0
+Version: 5.1
 Author URI: http://www.gopiplus.com/work/
 Donate link: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Tags: wordpress, plugin, photo, slider
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 global $wpdb, $wp_version;
@@ -22,14 +24,12 @@ function wp_50_slider()
 	$wp_50_speed = stripslashes(get_option('wp_50_speed'));
 	$wp_50_timeout = stripslashes(get_option('wp_50_timeout'));
 	$wp_50_type = stripslashes(get_option('wp_50_type'));
-		
 	
 	?>
     <!-- begin wp_50_photo -->
     <div id="wp_50_photo">
     <?php
 	$sSql = "select * from ".WP_PHOTO_50_TABLE." where wp_50_status='YES' and wp_50_type='$wp_50_type'";
-	//echo $sSql;
 	if(@$wp_50_random == "YES")
 	{
 		$sSql  = $sSql . " ORDER BY rand()";
@@ -65,8 +65,8 @@ function wp_50_slider()
 	?>
     </div>
     <script type="text/javascript">
-        $(function() {
-        $('#wp_50_photo').cycle({
+        jQuery(function() {
+        jQuery('#wp_50_photo').cycle({
             fx: '<?php echo @$wp_50_direction; ?>',
             speed: <?php echo @$wp_50_speed; ?>,
             timeout: <?php echo @$wp_50_timeout; ?>
@@ -76,8 +76,6 @@ function wp_50_slider()
     <!-- end wp_50_photo -->
     <?php
 }
-
-
 
 # Plugin installation default value
 function wp_50_install() 
@@ -170,42 +168,39 @@ function wp_50_admin_options()
 	echo '</form>';
 	echo '</div>';
 	?>
-<div style="float:right;">
-  <input name="text_management" lang="text_management" class="button-primary" onClick="location.href='options-general.php?page=wp-photo-text-slider-50/image-management.php'" value="Go to - Image Management" type="button" />
-  <input name="setting_management" lang="setting_management" class="button-primary" onClick="location.href='options-general.php?page=wp-photo-text-slider-50/wp-photo-text-slider-50.php'" value="Go to - Gallery Setting" type="button" />
-</div>
-<?php include("help.php"); ?>
+	<div style="float:right;">
+	  <input name="text_management" lang="text_management" class="button-primary" onClick="location.href='options-general.php?page=wp-photo-text-slider-50/image-management.php'" value="Go to - Image Management" type="button" />
+	  <input name="setting_management" lang="setting_management" class="button-primary" onClick="location.href='options-general.php?page=wp-photo-text-slider-50/wp-photo-text-slider-50.php'" value="Go to - Gallery Setting" type="button" />
+	</div>
+	<?php include("help.php"); ?>
 <?php
 }
 
-add_filter('the_content','wp_50_show_filter');
-
-function wp_50_show_filter($content)
-{
-	return 	preg_replace_callback('/\[WP-PHOTO-SLIDER(.*?)\]/sim','wp_50_show_filter_callback',$content);
-}
-
-function wp_50_show_filter_callback($matches) 
+function wp_50_show_shortcode( $atts ) 
 {
 	global $wpdb;
-	
-	$scode = $matches[1];
-	
-	//echo $scode."=1<br>";
 	$wp_50 = "";
+	$wp_50_random = "";
 	
-	list($wp_50_type_main) = split("[:.-]", $scode);
+	//$scode = $matches[1];
+	//list($wp_50_type_main) = split("[:.-]", $scode);
 	//[WP-PHOTO-SLIDER:TYPE=gallery1]
+	//list($wp_50_type_cap, $wp_50_type) = split('[=.-]', $scode);
 	
-	//echo $wp_50_type_main."=2<br>";
+	//[wp-photo-slider type="gallery1" direction="scrollUp" random="YES"]
+	if ( ! is_array( $atts ) )
+	{
+		return '';
+	}
+	$wp_50_type = $atts['type'];
+	$wp_50_direction = $atts['direction'];
+	$wp_50_random = $atts['random'];
 	
-	list($wp_50_type_cap, $wp_50_type) = split('[=.-]', $scode);
-	
-	//echo $wp_50_type."=3<br>";
-	
-	$wp_50_direction = stripslashes(get_option('wp_50_direction'));
 	$wp_50_speed = stripslashes(get_option('wp_50_speed'));
 	$wp_50_timeout = stripslashes(get_option('wp_50_timeout'));
+	
+	if(!is_numeric($wp_50_speed)) {	@$wp_50_speed = 700; }
+	if(!is_numeric($wp_50_timeout)) { @$wp_50_timeout = 5000; }
 	
 	$wp_50_pluginurl = get_option('siteurl') . "/wp-content/plugins/wp-photo-text-slider-50";
     
@@ -213,7 +208,7 @@ function wp_50_show_filter_callback($matches)
 
 	$sSql = "select * from ".WP_PHOTO_50_TABLE." where wp_50_status='YES' and wp_50_type='$wp_50_type'";
 
-	if(@$wp_50_random == "YES")
+	if($wp_50_random == "YES")
 	{
 		$sSql  = $sSql . " ORDER BY rand()";
 	}
@@ -236,32 +231,32 @@ function wp_50_show_filter_callback($matches)
 			$wp_50_extra1 = stripslashes($data->wp_50_extra1);
 			
 			$wp_50 = $wp_50 .'<div class="post">';
-				
-				if($wp_50_extra1 <> "") 
-				{ 
-					$wp_50 = $wp_50."<h2>".$wp_50_extra1."</h2>"; 
-				}
-				
-				$wp_50 = $wp_50 .'<div class="thumb">';
-                
-				if($wp_50_link <> "") 
-				{
-                	$wp_50 = $wp_50 .'<a target="'.$wp_50_target.'" href="'.$wp_50_link.'">';
-				}
-                
-				$wp_50 = $wp_50 .'<img style="border: 0px; margin: 0px;" src="'.$wp_50_path.'" alt="wp photo slider" />';
-				
-                if($wp_50_link <> "") 
-				{ 
-					$wp_50 = $wp_50 .'</a>';
-				}
-				
-                $wp_50 = $wp_50 .'</div>';
-				
-				if($wp_50_title <> "") 
-				{ 
-					$wp_50 = $wp_50."<p>".$wp_50_title."</p>"; 
-				}
+			
+			if($wp_50_extra1 <> "") 
+			{ 
+				$wp_50 = $wp_50."<h2>".$wp_50_extra1."</h2>"; 
+			}
+			
+			$wp_50 = $wp_50 .'<div class="thumb">';
+			
+			if($wp_50_link <> "") 
+			{
+				$wp_50 = $wp_50 .'<a target="'.$wp_50_target.'" href="'.$wp_50_link.'">';
+			}
+			
+			$wp_50 = $wp_50 .'<img style="border: 0px; margin: 0px;" src="'.$wp_50_path.'" alt="wp photo slider" />';
+			
+			if($wp_50_link <> "") 
+			{ 
+				$wp_50 = $wp_50 .'</a>';
+			}
+			
+			$wp_50 = $wp_50 .'</div>';
+			
+			if($wp_50_title <> "") 
+			{ 
+				$wp_50 = $wp_50."<p>".$wp_50_title."</p>"; 
+			}
 				
 			$wp_50 = $wp_50 .'</div>';
 
@@ -269,8 +264,8 @@ function wp_50_show_filter_callback($matches)
 	}
 	$wp_50 = $wp_50 .'</div>';
     $wp_50 = $wp_50 . '<script type="text/javascript">';
-    $wp_50 = $wp_50 . '$(function() {';
-	$wp_50 = $wp_50 . "$('#wp_50_photo1').cycle({fx: '".$wp_50_direction."',speed: 700,timeout: 5000";
+    $wp_50 = $wp_50 . 'jQuery(function() {';
+	$wp_50 = $wp_50 . "jQuery('#wp_50_photo1').cycle({fx: '".$wp_50_direction."',speed: 700,timeout: 5000";
 	$wp_50 = $wp_50 . '});';
 	$wp_50 = $wp_50 . '});';
 	$wp_50 = $wp_50 . '</script>';
@@ -318,23 +313,24 @@ function wp_50_widget_init()
 	} 
 }
 
+# Load javascript files.
 function wp_50_add_javascript_files() 
 {
 	if (!is_admin())
 	{
-		wp_enqueue_script( 'jquery-1.3.2.min', get_option('siteurl').'/wp-content/plugins/wp-photo-text-slider-50/js/jquery-1.3.2.min.js');
-		wp_enqueue_script( 'jquery.cycle.all.min', get_option('siteurl').'/wp-content/plugins/wp-photo-text-slider-50/js/jquery.cycle.all.min.js');
-		wp_enqueue_style( 'wp-photo-text-slider-50', get_option('siteurl').'/wp-content/plugins/wp-photo-text-slider-50/wp-photo-text-slider-50.css');
+		wp_enqueue_script('jquery');
+		wp_enqueue_script('jquery.cycle.all.latest', get_option('siteurl').'/wp-content/plugins/wp-photo-text-slider-50/js/jquery.cycle.all.latest.js');
+		wp_enqueue_style('wp-photo-text-slider-50', get_option('siteurl').'/wp-content/plugins/wp-photo-text-slider-50/wp-photo-text-slider-50.css');
 	}	
 }
-add_action('init', 'wp_50_add_javascript_files');
-
 
 function wp_50_deactivation() 
 {
-	
+	// No action required.
 }
 
+add_shortcode( 'wp-photo-slider', 'wp_50_show_shortcode' );
+add_action('init', 'wp_50_add_javascript_files');
 add_action("plugins_loaded", "wp_50_widget_init");
 register_activation_hook(__FILE__, 'wp_50_install');
 register_deactivation_hook(__FILE__, 'wp_50_deactivation');

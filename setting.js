@@ -1,6 +1,6 @@
 /**
  *     Wp photo text slider 50
- *     Copyright (C) 2011  www.gopiplus.com
+ *     Copyright (C) 2011 - 2013 www.gopiplus.com
  * 
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 function wp_50_submit()
 {
 	if(document.wp_50_form.wp_50_path.value=="")
@@ -25,24 +24,6 @@ function wp_50_submit()
 		document.wp_50_form.wp_50_path.focus();
 		return false;
 	}
-	//else if(document.wp_50_form.wp_50_link.value=="")
-//	{
-//		alert("Please enter the target link.")
-//		document.wp_50_form.wp_50_link.focus();
-//		return false;
-//	}
-//	else if(document.wp_50_form.wp_50_target.value=="")
-//	{
-//		alert("Please enter the target status.")
-//		document.wp_50_form.wp_50_target.focus();
-//		return false;
-//	}
-	//else if(document.wp_50_form.wp_50_title.value=="")
-//	{
-//		alert("Please enter the image alt text.")
-//		document.wp_50_form.wp_50_title.focus();
-//		return false;
-//	}
 	else if(document.wp_50_form.wp_50_type.value=="")
 	{
 		alert("Please enter the gallery type.")

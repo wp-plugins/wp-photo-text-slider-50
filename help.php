@@ -1,7 +1,7 @@
 <!--
 /**
  *     Wp photo text slider 50
- *     Copyright (C) 2011  www.gopiplus.com
+ *     Copyright (C) 2011 - 2013 www.gopiplus.com
  * 
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -18,18 +18,17 @@
  */
 -->
 
-
 <div class="wrap">
   <h2>Plugin Management</h2>
   <ul>
-  <li>Click "Go to - Image Management" button to add/update/delete the images.</li>
-  <li>Click "Go to - Gallery Setting" button to update gallery setting.</li>
+  	<li>Click "Go to - Image Management" button to add/update/delete the images.</li>
+ 	<li>Click "Go to - Gallery Setting" button to update gallery setting.</li>
   </ul>
   <h2>Plugin Configuration</h2>
   <ul>
-  <li>1. Drag and Drop the Widget</li>
-  <li>2. Add directly in the theme</li>
-  <li>3. Short code for pages and posts</li>
+  	<li>1. Drag and Drop the Widget</li>
+  	<li>2. Add directly in the theme</li>
+  	<li>3. Short code for pages and posts</li>
   </ul>
-  Check official website for more info <a target="_blank" href='http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/'>click here</a><br />
+  Check official website for more information <a target="_blank" href='http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/'>click here</a><br />
 </div>
