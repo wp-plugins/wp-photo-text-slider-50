@@ -26,7 +26,7 @@ function wp_50_submit()
 	}
 	else if(document.wp_50_form.wp_50_type.value=="")
 	{
-		alert("Please enter the gallery type.")
+		alert("Select gallery type, This is to group the images.")
 		document.wp_50_form.wp_50_type.focus();
 		return false;
 	}
@@ -54,14 +54,14 @@ function wp_50_delete(id)
 {
 	if(confirm("Do you want to delete this record?"))
 	{
-		document.frm_wp_50_display.action="options-general.php?page=wp-photo-text-slider-50/image-management.php&AC=DEL&DID="+id;
+		document.frm_wp_50_display.action="options-general.php?page=wp-photo-text-slider-50&ac=del&did="+id;
 		document.frm_wp_50_display.submit();
 	}
 }	
 
 function wp_50_redirect()
 {
-	window.location = "options-general.php?page=wp-photo-text-slider-50/image-management.php";
+	window.location = "options-general.php?page=wp-photo-text-slider-50";
 }
 
 function wp_50_help()

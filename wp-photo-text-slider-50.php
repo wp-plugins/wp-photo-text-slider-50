@@ -5,7 +5,7 @@ Plugin Name: Wp photo text slider 50
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Description:  Wordpress plugin Wp photo text slider 50 create a photo (photo + heading + description) slider on the wordpress website.
 Author: Gopi.R
-Version: 5.1
+Version: 6.0
 Author URI: http://www.gopiplus.com/work/
 Donate link: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Tags: wordpress, plugin, photo, slider
@@ -16,6 +16,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 global $wpdb, $wp_version;
 define("WP_PHOTO_50_TABLE", $wpdb->prefix . "wp_photo_50");
 
+define("WP_PHOTO_50_UNIQUE_NAME", "wp-photo-text-slider-50");
+define("WP_PHOTO_50_TITLE", "Wp photo text slider 50");
+define('WP_PHOTO_50_FAV', 'http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/');
+define('WP_PHOTO_50_LINK', 'Check official website for more information <a target="_blank" href="'.WP_PHOTO_50_FAV.'">click here</a>');
+
 function wp_50_slider() 
 {
 	global $wpdb;
@@ -25,12 +30,8 @@ function wp_50_slider()
 	$wp_50_timeout = stripslashes(get_option('wp_50_timeout'));
 	$wp_50_type = stripslashes(get_option('wp_50_type'));
 	
-	?>
-    <!-- begin wp_50_photo -->
-    <div id="wp_50_photo">
-    <?php
 	$sSql = "select * from ".WP_PHOTO_50_TABLE." where wp_50_status='YES' and wp_50_type='$wp_50_type'";
-	if(@$wp_50_random == "YES")
+	if($wp_50_random == "YES")
 	{
 		$sSql  = $sSql . " ORDER BY rand()";
 	}
@@ -43,13 +44,17 @@ function wp_50_slider()
 
 	if ( ! empty($data) ) 
 	{
+		?>
+		<!-- begin wp_50_photo -->
+		<div id="wp_50_photo">
+		<?php
 		$ivrss_count = 0;
 		foreach ( $data as $data ) 
 		{
 			$wp_50_path = $data->wp_50_path;
 			$wp_50_link = $data->wp_50_link;
 			$wp_50_target = $data->wp_50_target;
-			$wp_50_title = $data->wp_50_title;
+			$wp_50_title = stripslashes($data->wp_50_title);
 			?>
 			<div class="post">
 				<div class="thumb">
@@ -61,20 +66,25 @@ function wp_50_slider()
 			</div>
 			<?php
 		}
+		?>
+		</div>
+		<script type="text/javascript">
+			jQuery(function() {
+			jQuery('#wp_50_photo').cycle({
+				fx: '<?php echo @$wp_50_direction; ?>',
+				speed: <?php echo @$wp_50_speed; ?>,
+				timeout: <?php echo @$wp_50_timeout; ?>
+			});
+			});
+			</script> 
+		<!-- end wp_50_photo -->
+		<?php
 	}
-	?>
-    </div>
-    <script type="text/javascript">
-        jQuery(function() {
-        jQuery('#wp_50_photo').cycle({
-            fx: '<?php echo @$wp_50_direction; ?>',
-            speed: <?php echo @$wp_50_speed; ?>,
-            timeout: <?php echo @$wp_50_timeout; ?>
-        });
-        });
-        </script> 
-    <!-- end wp_50_photo -->
-    <?php
+	else
+	{
+		echo "No images available for this group ". $wp_50_type;
+	}
+
 }
 
 # Plugin installation default value
@@ -121,59 +131,23 @@ function wp_50_install()
 # Admin update option for default value
 function wp_50_admin_options() 
 {
-	echo "<div class='wrap'>";
-	echo "<h2>"; 
-	echo "Wp photo text slider 50";
-	echo "</h2>";
-	
-	$wp_50_title = get_option('wp_50_title');
-	$wp_50_direction = get_option('wp_50_direction');
-	$wp_50_speed = get_option('wp_50_speed');
-	$wp_50_timeout = get_option('wp_50_timeout');
-	$wp_50_type = get_option('wp_50_type');
-
-	if (@$_POST['wp_50_submit']) 
+	global $wpdb;
+	$current_page = isset($_GET['ac']) ? $_GET['ac'] : '';
+	switch($current_page)
 	{
-		$wp_50_title = stripslashes($_POST['wp_50_title']);
-		$wp_50_direction = stripslashes($_POST['wp_50_direction']);
-		$wp_50_speed = stripslashes($_POST['wp_50_speed']);
-		$wp_50_timeout = stripslashes($_POST['wp_50_timeout']);
-		$wp_50_type = stripslashes($_POST['wp_50_type']);
-		
-		update_option('wp_50_title', $wp_50_title );
-		update_option('wp_50_direction', $wp_50_direction );
-		update_option('wp_50_speed', $wp_50_speed );
-		update_option('wp_50_timeout', $wp_50_timeout );
-		update_option('wp_50_type', $wp_50_type );
+		case 'edit':
+			include('pages/image-management-edit.php');
+			break;
+		case 'add':
+			include('pages/image-management-add.php');
+			break;
+		case 'set':
+			include('pages/image-setting.php');
+			break;
+		default:
+			include('pages/image-management-show.php');
+			break;
 	}
-	
-	echo '<form name="wp_50_form" method="post" action="">';
-
-	echo '<p>Widget title:<br><input  style="width: 150px;" maxlength="150" type="text" value="';
-	echo $wp_50_title . '" name="wp_50_title" id="wp_50_title" /></p>';
-	
-	echo '<p>Slider direction:<br><input  style="width: 150px;" maxlength="15" type="text" value="';
-	echo $wp_50_direction . '" name="wp_50_direction" id="wp_50_direction" /> (scrollLeft/scrollRight/scrollUp/scrollDown)</p>';
-
-	echo '<p>Slider speed:<br><input  style="width: 150px;" maxlength="3" type="text" value="';
-	echo $wp_50_speed . '" name="wp_50_speed" id="wp_50_speed" /> (Only number)</p>';
-
-	echo '<p>Slider timeout:<br><input  style="width: 150px;" maxlength="3" type="text" value="';
-	echo $wp_50_timeout . '" name="wp_50_timeout" id="wp_50_timeout" /> (Only number)</p>';
-
-	echo '<p>Slider image group:<br><input  style="width: 150px;" maxlength="100" type="text" value="';
-	echo $wp_50_type . '" name="wp_50_type" id="wp_50_type" /> (Enter image group)</p>';
-
-	echo '<input name="wp_50_submit" id="wp_50_submit" class="button-primary" value="Submit" type="submit" />';
-	echo '</form>';
-	echo '</div>';
-	?>
-	<div style="float:right;">
-	  <input name="text_management" lang="text_management" class="button-primary" onClick="location.href='options-general.php?page=wp-photo-text-slider-50/image-management.php'" value="Go to - Image Management" type="button" />
-	  <input name="setting_management" lang="setting_management" class="button-primary" onClick="location.href='options-general.php?page=wp-photo-text-slider-50/wp-photo-text-slider-50.php'" value="Go to - Gallery Setting" type="button" />
-	</div>
-	<?php include("help.php"); ?>
-<?php
 }
 
 function wp_50_show_shortcode( $atts ) 
@@ -207,7 +181,7 @@ function wp_50_show_shortcode( $atts )
     $wp_50 = $wp_50 .'<div id="wp_50_photo1">';
 
 	$sSql = "select * from ".WP_PHOTO_50_TABLE." where wp_50_status='YES' and wp_50_type='$wp_50_type'";
-
+echo $sSql;
 	if($wp_50_random == "YES")
 	{
 		$sSql  = $sSql . " ORDER BY rand()";
@@ -244,7 +218,10 @@ function wp_50_show_shortcode( $atts )
 				$wp_50 = $wp_50 .'<a target="'.$wp_50_target.'" href="'.$wp_50_link.'">';
 			}
 			
-			$wp_50 = $wp_50 .'<img style="border: 0px; margin: 0px;" src="'.$wp_50_path.'" alt="wp photo slider" />';
+			if($wp_50_path <> "") 
+			{		
+				$wp_50 = $wp_50 .'<img style="border: 0px; margin: 0px;" src="'.$wp_50_path.'" alt="'.$wp_50_extra1.'" />';
+			}
 			
 			if($wp_50_link <> "") 
 			{ 
@@ -261,22 +238,27 @@ function wp_50_show_shortcode( $atts )
 			$wp_50 = $wp_50 .'</div>';
 
 		}
+		
+		$wp_50 = $wp_50 .'</div>';
+		$wp_50 = $wp_50 . '<script type="text/javascript">';
+		$wp_50 = $wp_50 . 'jQuery(function() {';
+		$wp_50 = $wp_50 . "jQuery('#wp_50_photo1').cycle({fx: '".$wp_50_direction."',speed: 700,timeout: 5000";
+		$wp_50 = $wp_50 . '});';
+		$wp_50 = $wp_50 . '});';
+		$wp_50 = $wp_50 . '</script>';
 	}
-	$wp_50 = $wp_50 .'</div>';
-    $wp_50 = $wp_50 . '<script type="text/javascript">';
-    $wp_50 = $wp_50 . 'jQuery(function() {';
-	$wp_50 = $wp_50 . "jQuery('#wp_50_photo1').cycle({fx: '".$wp_50_direction."',speed: 700,timeout: 5000";
-	$wp_50 = $wp_50 . '});';
-	$wp_50 = $wp_50 . '});';
-	$wp_50 = $wp_50 . '</script>';
+	else
+	{
+		$wp_50 = $wp_50 . 'No images available for this group '. $wp_50_type;
+	}
+
 	
 	return $wp_50;
 }
 
 function wp_50_add_to_menu() 
 {
-	add_options_page('Wp photo text slider 50', 'Wp photo text slider 50', 'manage_options', __FILE__, 'wp_50_admin_options' );
-	add_options_page('Wp photo text slider 50', '', 'manage_options', "wp-photo-text-slider-50/image-management.php",'' );
+	add_options_page('Wp photo text slider 50', 'Wp photo text slider 50', 'manage_options', 'wp-photo-text-slider-50', 'wp_50_admin_options' );
 }
 
 if (is_admin()) 
@@ -286,8 +268,8 @@ if (is_admin())
 
 function wp_50_control() 
 {
-	echo '<p>Wp photo text slider 50<br><br> To change the setting goto "Wp photo text slider 50" link on setting menu. ';
-	echo '<a href="options-general.php?page=wp-photo-text-slider-50/wp-photo-text-slider-50.php">click here</a></p>';
+	echo '<p>Wp photo text slider 50<br><br> To change the setting goto <b>Wp photo text slider 50</b> link on setting menu. ';
+	echo '<a href="options-general.php?page=wp-photo-text-slider-50">click here</a></p>';
 }
 
 function wp_50_widget($args) 
