@@ -5,7 +5,7 @@ Plugin Name: Wp photo text slider 50
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Description:  Wordpress plugin Wp photo text slider 50 create a photo (photo + heading + description) slider on the wordpress website.
 Author: Gopi.R
-Version: 6.0
+Version: 6.1
 Author URI: http://www.gopiplus.com/work/
 Donate link: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Tags: wordpress, plugin, photo, slider
@@ -181,7 +181,7 @@ function wp_50_show_shortcode( $atts )
     $wp_50 = $wp_50 .'<div id="wp_50_photo1">';
 
 	$sSql = "select * from ".WP_PHOTO_50_TABLE." where wp_50_status='YES' and wp_50_type='$wp_50_type'";
-echo $sSql;
+
 	if($wp_50_random == "YES")
 	{
 		$sSql  = $sSql . " ORDER BY rand()";

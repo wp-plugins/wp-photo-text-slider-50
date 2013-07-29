@@ -6,7 +6,7 @@ Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-sl
 Tags: wordpress, plugin, photo, slider
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 6.0
+Stable tag: 6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -139,6 +139,10 @@ Tested up to 3.6
 Added few security features.
 New admin layout.
 
+6.1
+
+Small bug fixed (Removed echo from the code)
+
 == Changelog ==
 
 1.0						
@@ -174,3 +178,7 @@ From this version we are using existing wordpress jQuery.
 Tested up to 3.6
 Added few security features.
 New admin layout.
+
+6.1
+
+Small bug fixed (Removed echo from the code)
