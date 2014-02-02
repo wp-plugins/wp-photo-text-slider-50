@@ -18,7 +18,7 @@ if (isset($_POST['frm_wp_50_display']) && $_POST['frm_wp_50_display'] == 'yes')
 	
 	if ($result != '1')
 	{
-		?><div class="error fade"><p><strong>Oops, selected details doesn't exist (1).</strong></p></div><?php
+		?><div class="error fade"><p><strong><?php _e('Oops, selected details doesnt exist', 'wp-photo-text'); ?></strong></p></div><?php
 	}
 	else
 	{
@@ -36,7 +36,7 @@ if (isset($_POST['frm_wp_50_display']) && $_POST['frm_wp_50_display'] == 'yes')
 			
 			//	Set success message
 			$wp_50_success_msg = TRUE;
-			$wp_50_success = __('Selected record was successfully deleted.', WP_wp_50_UNIQUE_NAME);
+			$wp_50_success = __('Selected record was successfully deleted.', 'wp-photo-text');
 		}
 	}
 	
@@ -48,34 +48,35 @@ if (isset($_POST['frm_wp_50_display']) && $_POST['frm_wp_50_display'] == 'yes')
 ?>
 <div class="wrap">
   <div id="icon-edit" class="icon32 icon32-posts-post"></div>
-    <h2><?php echo WP_PHOTO_50_TITLE ?><a class="add-new-h2" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=wp-photo-text-slider-50&amp;ac=add">Add New</a></h2>
+    <h2><?php _e('Wp photo text slider', 'wp-photo-text'); ?>
+	<a class="add-new-h2" href="<?php echo WP_PHOTO_50_ADMIN_URL; ?>&amp;ac=add"><?php _e('Add New', 'wp-photo-text'); ?></a></h2>
     <div class="tool-box">
 	<?php
 		$sSql = "SELECT * FROM `".WP_PHOTO_50_TABLE."` order by wp_50_type, wp_50_order";
 		$myData = array();
 		$myData = $wpdb->get_results($sSql, ARRAY_A);
 		?>
-		<script language="JavaScript" src="<?php echo get_option('siteurl'); ?>/wp-content/plugins/wp-photo-text-slider-50/pages/setting.js"></script>
+		<script language="JavaScript" src="<?php echo WP_PHOTO_50_PLUGIN_URL; ?>/pages/setting.js"></script>
 		<form name="frm_wp_50_display" method="post">
       <table width="100%" class="widefat" id="straymanage">
         <thead>
           <tr>
             <th class="check-column" scope="row"><input type="checkbox" /></th>
-			<th scope="col">Type / Group</th>
-            <th scope="col">Heading</th>
-			<th scope="col">Target</th>
-            <th scope="col">Order</th>
-            <th scope="col">Display</th>
+			<th scope="col"><?php _e('Type / Group', 'wp-photo-text'); ?></th>
+            <th scope="col"><?php _e('Heading', 'wp-photo-text'); ?></th>
+			<th scope="col"><?php _e('Target', 'wp-photo-text'); ?></th>
+            <th scope="col"><?php _e('Order', 'wp-photo-text'); ?></th>
+            <th scope="col"><?php _e('Display', 'wp-photo-text'); ?></th>
           </tr>
         </thead>
 		<tfoot>
           <tr>
             <th class="check-column" scope="row"><input type="checkbox" /></th>
-			<th scope="col">Type/Group</th>
-            <th scope="col">Heading</th>
-			<th scope="col">Target</th>
-            <th scope="col">Order</th>
-            <th scope="col">Display</th>
+			<th scope="col"><?php _e('Type / Group', 'wp-photo-text'); ?></th>
+            <th scope="col"><?php _e('Heading', 'wp-photo-text'); ?></th>
+			<th scope="col"><?php _e('Target', 'wp-photo-text'); ?></th>
+            <th scope="col"><?php _e('Order', 'wp-photo-text'); ?></th>
+            <th scope="col"><?php _e('Display', 'wp-photo-text'); ?></th>
           </tr>
         </tfoot>
 		<tbody>
@@ -90,8 +91,8 @@ if (isset($_POST['frm_wp_50_display']) && $_POST['frm_wp_50_display'] == 'yes')
 						<td align="left"><input type="checkbox" value="<?php echo $data['wp_50_id']; ?>" name="wp_50_group_item[]"></td>
 						<td><?php echo strtoupper(stripslashes($data['wp_50_type'])); ?>
 						<div class="row-actions">
-							<span class="edit"><a title="Edit" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=wp-photo-text-slider-50&amp;ac=edit&amp;did=<?php echo $data['wp_50_id']; ?>">Edit</a> | </span>
-							<span class="trash"><a onClick="javascript:wp_50_delete('<?php echo $data['wp_50_id']; ?>')" href="javascript:void(0);">Delete</a></span> 
+						<span class="edit"><a title="Edit" href="<?php echo WP_PHOTO_50_ADMIN_URL; ?>&amp;ac=edit&amp;did=<?php echo $data['wp_50_id']; ?>"><?php _e('Edit', 'wp-photo-text'); ?></a> | </span>
+						<span class="trash"><a onClick="javascript:wp_50_delete('<?php echo $data['wp_50_id']; ?>')" href="javascript:void(0);"><?php _e('Delete', 'wp-photo-text'); ?></a></span> 
 						</div>
 						</td>
 						<td><a href="<?php echo stripslashes($data['wp_50_path']); ?>" target="_blank"><?php echo stripslashes($data['wp_50_extra1']); ?></a></td>
@@ -105,7 +106,7 @@ if (isset($_POST['frm_wp_50_display']) && $_POST['frm_wp_50_display'] == 'yes')
 			}
 			else
 			{
-				?><tr><td colspan="6" align="center">No records available.</td></tr><?php 
+				?><tr><td colspan="6" align="center"><?php _e('No records available.', 'wp-photo-text'); ?></td></tr><?php 
 			}
 			?>
 		</tbody>
@@ -115,18 +116,21 @@ if (isset($_POST['frm_wp_50_display']) && $_POST['frm_wp_50_display'] == 'yes')
       </form>	
 	  <div class="tablenav">
 	  <h2>
-	  <a class="button add-new-h2" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=wp-photo-text-slider-50&amp;ac=add">Add new</a>
-	  <a class="button add-new-h2" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=wp-photo-text-slider-50&amp;ac=set">Setting Management</a>
-	  <a class="button add-new-h2" target="_blank" href="<?php echo WP_PHOTO_50_FAV; ?>">Help</a>
+	  <a class="button add-new-h2" href="<?php echo WP_PHOTO_50_ADMIN_URL; ?>&amp;ac=add"><?php _e('Add New', 'wp-photo-text'); ?></a>
+	  <a class="button add-new-h2" href="<?php echo WP_PHOTO_50_ADMIN_URL; ?>&amp;ac=set"><?php _e('Setting Management', 'wp-photo-text'); ?></a>
+	  <a class="button add-new-h2" target="_blank" href="<?php echo WP_PHOTO_50_FAV; ?>"><?php _e('Help', 'wp-photo-text'); ?></a>
 	  </h2>
 	  </div>
 		<div style="height:5px"></div>
-		<h3>Plugin configuration option</h3>
+		<h3><?php _e('Plugin configuration option', 'wp-photo-text'); ?></h3>
 		<ol>
-			<li>Add the plugin in the posts or pages using short code.</li>
-			<li>Add directly in to the theme using PHP code.</li>
-			<li>Drag and drop the widget to your sidebar.</li>
+			<li><?php _e('Add the plugin in the posts or pages using short code.', 'wp-photo-text'); ?></li>
+			<li><?php _e('Add directly in to the theme using PHP code.', 'wp-photo-text'); ?></li>
+			<li><?php _e('Drag and drop the widget to your sidebar.', 'wp-photo-text'); ?></li>
 		</ol>
-		<p class="description"><?php echo WP_PHOTO_50_LINK; ?></p>
+		<p class="description">
+			<?php _e('Check official website for more information', 'wp-photo-text'); ?>
+			<a target="_blank" href="<?php echo WP_PHOTO_50_FAV; ?>"><?php _e('click here', 'wp-photo-text'); ?></a>
+		</p>
 	</div>
 </div>

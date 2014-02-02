@@ -1,11 +1,10 @@
 <?php
-
 /*
 Plugin Name: Wp photo text slider 50
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Description:  Wordpress plugin Wp photo text slider 50 create a photo (photo + heading + description) slider on the wordpress website.
 Author: Gopi.R
-Version: 6.1
+Version: 6.2
 Author URI: http://www.gopiplus.com/work/
 Donate link: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Tags: wordpress, plugin, photo, slider
@@ -15,16 +14,24 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 global $wpdb, $wp_version;
 define("WP_PHOTO_50_TABLE", $wpdb->prefix . "wp_photo_50");
-
-define("WP_PHOTO_50_UNIQUE_NAME", "wp-photo-text-slider-50");
-define("WP_PHOTO_50_TITLE", "Wp photo text slider 50");
 define('WP_PHOTO_50_FAV', 'http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/');
-define('WP_PHOTO_50_LINK', 'Check official website for more information <a target="_blank" href="'.WP_PHOTO_50_FAV.'">click here</a>');
+
+if ( ! defined( 'WP_PHOTO_50_BASENAME' ) )
+	define( 'WP_PHOTO_50_BASENAME', plugin_basename( __FILE__ ) );
+	
+if ( ! defined( 'WP_PHOTO_50_PLUGIN_NAME' ) )
+	define( 'WP_PHOTO_50_PLUGIN_NAME', trim( dirname( WP_PHOTO_50_BASENAME ), '/' ) );
+	
+if ( ! defined( 'WP_PHOTO_50_PLUGIN_URL' ) )
+	define( 'WP_PHOTO_50_PLUGIN_URL', WP_PLUGIN_URL . '/' . WP_PHOTO_50_PLUGIN_NAME );
+	
+if ( ! defined( 'WP_PHOTO_50_ADMIN_URL' ) )
+	define( 'WP_PHOTO_50_ADMIN_URL', get_option('siteurl') . '/wp-admin/options-general.php?page=wp-photo-text-slider-50' );
 
 function wp_50_slider() 
 {
 	global $wpdb;
-	
+	$wp_50_random = "";
 	$wp_50_direction = stripslashes(get_option('wp_50_direction'));
 	$wp_50_speed = stripslashes(get_option('wp_50_speed'));
 	$wp_50_timeout = stripslashes(get_option('wp_50_timeout'));
@@ -84,10 +91,8 @@ function wp_50_slider()
 	{
 		echo "No images available for this group ". $wp_50_type;
 	}
-
 }
 
-# Plugin installation default value
 function wp_50_install() 
 {
 	add_option('wp_50_title', "Photo Slider");
@@ -97,7 +102,6 @@ function wp_50_install()
 	add_option('wp_50_type', "gallery1");
 	
 	global $wpdb;
-	
 	if($wpdb->get_var("show tables like '". WP_PHOTO_50_TABLE . "'") != WP_PHOTO_50_TABLE) 
 	{
 		$sSql = "CREATE TABLE IF NOT EXISTS `". WP_PHOTO_50_TABLE . "` (";
@@ -113,7 +117,7 @@ function wp_50_install()
 		$sSql = $sSql . "`wp_50_extra2` VARCHAR( 100 ) NOT NULL ,";
 		$sSql = $sSql . "`wp_50_date` datetime NOT NULL default '0000-00-00 00:00:00' ,";
 		$sSql = $sSql . "PRIMARY KEY ( `wp_50_id` )";
-		$sSql = $sSql . ")";
+		$sSql = $sSql . ") ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 		$wpdb->query($sSql);
 		
 		$IsSql = "INSERT INTO `". WP_PHOTO_50_TABLE . "` (`wp_50_path`, `wp_50_link`, `wp_50_target` , `wp_50_title` , `wp_50_order` , `wp_50_status` , `wp_50_type` , `wp_50_extra1` , `wp_50_date`)"; 
@@ -121,14 +125,13 @@ function wp_50_install()
 		$i = 1;
 		for($i=1; $i<6; $i++)
 		{
-			$sSql = $IsSql . " VALUES ('".get_option('siteurl')."/wp-content/plugins/wp-photo-text-slider-50/images/sing_$i.jpg', '#', '_parent', '$title', '$i', 'YES', 'gallery1', 'Wp photo slider $i', '0000-00-00 00:00:00');";
+			$sSql = $IsSql . " VALUES ('".WP_PHOTO_50_PLUGIN_URL."/images/sing_$i.jpg', '#', '_parent', '$title', '$i', 'YES', 'gallery1', 'Wp photo slider $i', '0000-00-00 00:00:00');";
 			$wpdb->query($sSql);
 			$sSql = "";
 		}
 	}
 }
 
-# Admin update option for default value
 function wp_50_admin_options() 
 {
 	global $wpdb;
@@ -156,11 +159,6 @@ function wp_50_show_shortcode( $atts )
 	$wp_50 = "";
 	$wp_50_random = "";
 	
-	//$scode = $matches[1];
-	//list($wp_50_type_main) = split("[:.-]", $scode);
-	//[WP-PHOTO-SLIDER:TYPE=gallery1]
-	//list($wp_50_type_cap, $wp_50_type) = split('[=.-]', $scode);
-	
 	//[wp-photo-slider type="gallery1" direction="scrollUp" random="YES"]
 	if ( ! is_array( $atts ) )
 	{
@@ -173,8 +171,8 @@ function wp_50_show_shortcode( $atts )
 	$wp_50_speed = stripslashes(get_option('wp_50_speed'));
 	$wp_50_timeout = stripslashes(get_option('wp_50_timeout'));
 	
-	if(!is_numeric($wp_50_speed)) {	@$wp_50_speed = 700; }
-	if(!is_numeric($wp_50_timeout)) { @$wp_50_timeout = 5000; }
+	if(!is_numeric($wp_50_speed)) {	$wp_50_speed = 700; }
+	if(!is_numeric($wp_50_timeout)) { $wp_50_timeout = 5000; }
 	
 	$wp_50_pluginurl = get_option('siteurl') . "/wp-content/plugins/wp-photo-text-slider-50";
     
@@ -236,7 +234,6 @@ function wp_50_show_shortcode( $atts )
 			}
 				
 			$wp_50 = $wp_50 .'</div>';
-
 		}
 		
 		$wp_50 = $wp_50 .'</div>';
@@ -251,14 +248,13 @@ function wp_50_show_shortcode( $atts )
 	{
 		$wp_50 = $wp_50 . 'No images available for this group '. $wp_50_type;
 	}
-
-	
 	return $wp_50;
 }
 
 function wp_50_add_to_menu() 
 {
-	add_options_page('Wp photo text slider 50', 'Wp photo text slider 50', 'manage_options', 'wp-photo-text-slider-50', 'wp_50_admin_options' );
+	add_options_page(__('Wp photo text slider', 'wp-photo-text'), 
+			__('Wp photo text slider', 'wp-photo-text'), 'manage_options', 'wp-photo-text-slider-50', 'wp_50_admin_options' );
 }
 
 if (is_admin()) 
@@ -268,8 +264,11 @@ if (is_admin())
 
 function wp_50_control() 
 {
-	echo '<p>Wp photo text slider 50<br><br> To change the setting goto <b>Wp photo text slider 50</b> link on setting menu. ';
-	echo '<a href="options-general.php?page=wp-photo-text-slider-50">click here</a></p>';
+	echo '<p><b>';
+	_e('Wp photo text slider', 'wp-photo-text');
+	echo '.</b> ';
+	_e('Check official website for more information', 'wp-photo-text');
+	?> <a target="_blank" href="<?php echo WP_PHOTO_50_FAV; ?>"><?php _e('click here', 'wp-photo-text'); ?></a></p><?php
 }
 
 function wp_50_widget($args) 
@@ -286,23 +285,22 @@ function wp_50_widget_init()
 {
 	if(function_exists('wp_register_sidebar_widget')) 	
 	{
-		wp_register_sidebar_widget('Wp photo text slider 50', 'Wp photo text slider 50', 'wp_50_widget');
+		wp_register_sidebar_widget( __('Wp photo text slider 50', 'wp-photo-text'), __('Wp photo text slider 50', 'wp-photo-text'), 'wp_50_widget');
 	}
 	
 	if(function_exists('wp_register_widget_control')) 	
 	{
-		wp_register_widget_control('Wp photo text slider 50', array('Wp photo text slider 50', 'widgets'), 'wp_50_control');
+		wp_register_widget_control( __('Wp photo text slider 50', 'wp-photo-text'), array( __('Wp photo text slider 50', 'wp-photo-text'), 'widgets'), 'wp_50_control');
 	} 
 }
 
-# Load javascript files.
 function wp_50_add_javascript_files() 
 {
 	if (!is_admin())
 	{
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('jquery.cycle.all.latest', get_option('siteurl').'/wp-content/plugins/wp-photo-text-slider-50/js/jquery.cycle.all.latest.js');
-		wp_enqueue_style('wp-photo-text-slider-50', get_option('siteurl').'/wp-content/plugins/wp-photo-text-slider-50/wp-photo-text-slider-50.css');
+		wp_enqueue_script('jquery.cycle.all.latest', WP_PHOTO_50_PLUGIN_URL.'/js/jquery.cycle.all.latest.js');
+		wp_enqueue_style('wp-photo-text-slider-50', WP_PHOTO_50_PLUGIN_URL.'/wp-photo-text-slider-50.css');
 	}	
 }
 
@@ -311,6 +309,12 @@ function wp_50_deactivation()
 	// No action required.
 }
 
+function wp_50_textdomain() 
+{
+	  load_plugin_textdomain( 'wp-photo-text', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+add_action('plugins_loaded', 'wp_50_textdomain');
 add_shortcode( 'wp-photo-slider', 'wp_50_show_shortcode' );
 add_action('init', 'wp_50_add_javascript_files');
 add_action("plugins_loaded", "wp_50_widget_init");

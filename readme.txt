@@ -4,9 +4,9 @@ Donate link: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-s
 Author URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Tags: wordpress, plugin, photo, slider
-Requires at least: 3.0
-Tested up to: 3.6
-Stable tag: 6.1
+Requires at least: 3.4
+Tested up to: 3.8
+Stable tag: 6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -99,86 +99,98 @@ http://www.gopiplus.com/work/2011/04/25/wordpress-plugin-up-down-image-slideshow
 
 == Screenshots ==
 
-1. http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
+1. Front End Screen http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 
-2. http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
+2. Admin Screen http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 
 == Upgrade Notice ==
 
-1.0							
+= 1.0 =						
 			
 First version.		
 
-2.0
+= 2.0 =
 
 Tested up to WordPress 3.2.1
 Javascript added using enqueue script.
 
-3.0
+= 3.0 =
 
 Tested up to WordPress 3.3
 
-4.0
+= 4.0 =
 
 Fixed plug-in directory violations issue
 Tested up to WordPress 3.4
 
-5.0
+= 5.0 =
 
 New demo link, http://www.gopiplus.com
 
-5.1
+= 5.1 =
 
 Tested up to WordPress 3.5
 Avoid registering the alternate jQuery.
 From this version we are using existing wordpress jQuery.
 
-6.0
+= 6.0 =
 
 Tested up to 3.6
 Added few security features.
 New admin layout.
 
-6.1
+= 6.1 =
 
 Small bug fixed (Removed echo from the code)
+
+= 6.2 =
+
+1. Tested up to 3.8
+2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
+Plugin *.po file (wp-photo-text.po) available in the languages folder.
 
 == Changelog ==
 
-1.0						
+= 1.0 =					
 					
 First version.
 
-2.0
+= 2.0 =
 
 Tested up to WordPress 3.2.1
 Javascript added using enqueue script.
 
-3.0
+= 3.0 =
 
 Tested up to WordPress 3.3
 
-4.0
+= 4.0 =
 
 Fixed plug-in directory violations issue
 Tested up to WordPress 3.4
 
-5.0
+= 5.0 =
 
 New demo link, http://www.gopiplus.com
 
-5.1
+= 5.1 =
 
 Tested up to WordPress 3.5
 Avoid registering the alternate jQuery.
 From this version we are using existing wordpress jQuery.
 
-6.0
+= 6.0 =
 
 Tested up to 3.6
 Added few security features.
 New admin layout.
 
-6.1
+= 6.1 =
 
 Small bug fixed (Removed echo from the code)
+
+= 6.2 =
+
+1. Tested up to 3.8
+2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
+Plugin *.po file (wp-photo-text.po) available in the languages folder.
