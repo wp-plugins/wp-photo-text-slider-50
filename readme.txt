@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-sl
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Tags: wordpress, plugin, photo, slider
 Requires at least: 3.4
-Tested up to: 3.8
-Stable tag: 6.2
+Tested up to: 3.9
+Stable tag: 6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -149,6 +149,10 @@ Small bug fixed (Removed echo from the code)
 2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
 Plugin *.po file (wp-photo-text.po) available in the languages folder.
 
+= 6.3 =
+
+1. Tested up to 3.9
+
 == Changelog ==
 
 = 1.0 =					
@@ -194,3 +198,7 @@ Small bug fixed (Removed echo from the code)
 1. Tested up to 3.8
 2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
 Plugin *.po file (wp-photo-text.po) available in the languages folder.
+
+= 6.3 =
+
+1. Tested up to 3.9
