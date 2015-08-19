@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-sl
 Plugin URI: http://www.gopiplus.com/work/2011/06/02/wordpress-plugin-wp-photo-slider-50/
 Tags: wordpress, plugin, photo, slider
 Requires at least: 3.4
-Tested up to: 4.2.2
-Stable tag: 6.6
+Tested up to: 4.3
+Stable tag: 6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -144,6 +144,11 @@ Plugin *.po file (wp-photo-text.po) available in the languages folder.
 
 1. Tested up to 4.2.2
 
+= 6.7 =
+
+1. Tested up to 4.3
+2. Image upload option is added in the plugin admin. With this option you can easily upload (or select from media) your images into this plugin.
+
 == Changelog ==
 
 = 1.0 =					
@@ -205,3 +210,8 @@ Plugin *.po file (wp-photo-text.po) available in the languages folder.
 = 6.6 =
 
 1. Tested up to 4.2.2
+
+= 6.7 =
+
+1. Tested up to 4.3
+2. Image upload option is added in the plugin admin. With this option you can easily upload (or select from media) your images into this plugin.

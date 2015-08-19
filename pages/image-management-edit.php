@@ -2,6 +2,7 @@
 <div class="wrap">
 <?php
 $did = isset($_GET['did']) ? $_GET['did'] : '0';
+if(!is_numeric($did)) { die('<p>Are you sure you want to do this?</p>'); }
 
 // First check if ID exist with requested ID
 $sSql = $wpdb->prepare(
@@ -102,6 +103,34 @@ if ($wp_50_error_found == FALSE && strlen($wp_50_success) > 0)
 }
 ?>
 <script language="JavaScript" src="<?php echo WP_PHOTO_50_PLUGIN_URL; ?>/pages/setting.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    $('#upload-btn').click(function(e) {
+        e.preventDefault();
+        var image = wp.media({ 
+            title: 'Upload Image',
+            // mutiple: true if you want to upload multiple files at once
+            multiple: false
+        }).open()
+        .on('select', function(e){
+            // This will return the selected image from the Media Uploader, the result is an object
+            var uploaded_image = image.state().get('selection').first();
+            // We convert uploaded_image to a JSON object to make accessing it easier
+            // Output to the console uploaded_image
+            console.log(uploaded_image);
+            var img_imageurl = uploaded_image.toJSON().url;
+			var img_imagetitle = uploaded_image.toJSON().title;
+            // Let's assign the url value to the input field
+            $('#wp_50_path').val(img_imageurl);
+			$('#wp_50_extra1').val(img_imagetitle);
+        });
+    });
+});
+</script>
+<?php
+wp_enqueue_script('jquery'); // jQuery
+wp_enqueue_media(); // This will enqueue the Media Uploader script
+?>
 <div class="form-wrap">
 	<div id="icon-edit" class="icon32 icon32-posts-post"><br></div>
 	<h2><?php _e('Wp photo text slider', 'wp-photo-text'); ?></h2>
@@ -109,12 +138,13 @@ if ($wp_50_error_found == FALSE && strlen($wp_50_success) > 0)
       <h3><?php _e('Update details', 'wp-photo-text'); ?></h3>
       
 	  <label for="tag-title"><?php _e('Enter image path (URL)', 'wp-photo-text'); ?></label>
-		<input name="wp_50_path" type="text" id="wp_50_path" value="<?php echo $form['wp_50_path']; ?>" size="123" />
+		<input name="wp_50_path" type="text" id="wp_50_path" value="<?php echo $form['wp_50_path']; ?>" size="93" />
+		<input type="button" name="upload-btn" id="upload-btn" class="button-secondary" value="Upload Image">
 		<p><?php _e('Where is the picture located on the internet', 'wp-photo-text'); ?> 
 		(ex: http://www.gopiplus.com/work/wp-content/uploads/pluginimages/250x167/250x167_2.jpg)</p>
 		
 		<label for="tag-title"><?php _e('Enter target link', 'wp-photo-text'); ?></label>
-		<input name="wp_50_link" type="text" id="wp_50_link" value="<?php echo $form['wp_50_link']; ?>" size="123" />
+		<input name="wp_50_link" type="text" id="wp_50_link" value="<?php echo $form['wp_50_link']; ?>" size="93" />
 		<p><?php _e('When someone clicks on the picture, where do you want to send them.', 'wp-photo-text'); ?></p>
 			
 		<label for="tag-title"><?php _e('Select target option', 'wp-photo-text'); ?></label>
@@ -127,11 +157,11 @@ if ($wp_50_error_found == FALSE && strlen($wp_50_success) > 0)
 		<p><?php _e('Do you want to open link in new window?', 'wp-photo-text'); ?></p>
 		
 		<label for="tag-title"><?php _e('Enter heading (Title)', 'wp-photo-text'); ?></label>
-		<input name="wp_50_extra1" type="text" id="wp_50_extra1" value="<?php echo esc_html(stripslashes($form['wp_50_extra1'])); ?>" size="123" />
+		<input name="wp_50_extra1" type="text" id="wp_50_extra1" value="<?php echo esc_html(stripslashes($form['wp_50_extra1'])); ?>" size="93" />
 		<p><?php _e('Enter your title.', 'wp-photo-text'); ?></p>
 		
 		<label for="tag-title"><?php _e('Enter description', 'wp-photo-text'); ?></label>
-		<textarea name="wp_50_title" cols="120" rows="10" id="wp_50_title"><?php echo esc_html(stripslashes($form['wp_50_title'])); ?></textarea>
+		<textarea name="wp_50_title" cols="90" rows="10" id="wp_50_title"><?php echo esc_html(stripslashes($form['wp_50_title'])); ?></textarea>
 		<p><?php _e('Enter your description.', 'wp-photo-text'); ?></p>
 		
 		<label for="tag-title"><?php _e('Select gallery type (This is to group the content)', 'wp-photo-text'); ?></label>
